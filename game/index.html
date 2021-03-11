@@ -20,27 +20,39 @@
 
   // ******** START CODING ON THE NEXT LINE ********
 
-var shape = new THREE.SphereGeometry(100, 50, 50);
-var shape_small = new THREE.SphereGeometry(20,50,50);
+// Cuerpo   
+var body = new THREE.SphereGeometry(100);
 var cover = new THREE.MeshNormalMaterial(flat);
-var ball = new THREE.Mesh(shape, cover);
-var ball2 = new THREE.Mesh(shape_small, cover);
-var ball3 = new THREE.Mesh(shape_small, cover);
-
-
-
-ball.position.set(0,0,0);
-ball2.position.set(50,0,100);
-ball3.position.set(-50,0,100);
-
-scene.add(ball);
-scene.add(ball2);
-scene.add(ball3);
-
-
+var avatar = new THREE.Mesh(body, cover);
+scene.add(avatar);
+    
+//Mano derecha
+var hand = new THREE.SphereGeometry(50);
+var rightHand = new THREE.Mesh(hand, cover);
+rightHand.position.set(-150,0,0);
+scene.add(rightHand);
+    
+//Mano izquierda 
+var leftHand = new THREE.Mesh(hand, cover);
+leftHand.position.set(150,0,0);
+scene.add(leftHand);
+    
+//Pie 
+var foot = new THREE.SphereGeometry(50);
+    
+//Pie derecho 
+var rightFoot = new THREE.Mesh(foot, cover);
+rightFoot.position.set(-75,-125,0);
+scene.add(rightFoot);
+    
+// Pie izquierdo 
+var leftFoot = new THREE.Mesh(foot, cover);
+leftFoot.position.set(75,-125,0);
+scene.add(leftFoot);
+    
+    
 
 
   // Now, show what the camera sees on the screen:
   renderer.render(scene, camera);
 </script>
-
