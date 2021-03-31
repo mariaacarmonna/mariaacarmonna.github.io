@@ -52,6 +52,33 @@ avatar.add(leftFoot);
     
     document.addEventListener("keydown", gestionarTecla);
     
+    function hacerArbol(x,z){
+        
+        
+        //CREAR EL TRONCO
+        var tronco = new THREE.Mesh(
+        new THREE.CylinderGeometry(50,50,200),
+        new THREE.MeshBasicMaterial({color:"sienna"})
+        );
+        
+        //CREAR LA COPA 
+        
+        var copa = new THREE.Mesh(
+        new THREE.SphereGeometry(150),
+        new THREE.MeshBasicMaterial({color:"forestgreen"})
+        );
+        
+        //tronco add(copa);
+        
+        copa.position.y=175; 
+        tronco.add(copa);
+        
+        tronco.position.set(x, -75, z);
+        scene.add(tronco);
+    }
+    
+    hacerArbol(0,0);
+    
     function gestionarTecla(evento) {
         //alert(evento.code)
         var codigo = evento.code;
