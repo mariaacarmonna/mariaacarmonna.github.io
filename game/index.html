@@ -10,8 +10,9 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 500;
-  //scene.add(camera);
+  camera.position.z = -600;
+    scene.add(camera);
+    
 
   // The "renderer" draws what the camera sees onto the screen:
   var renderer = new THREE.WebGLRenderer({antialias: true});
@@ -93,11 +94,37 @@ avatar.add(leftFoot);
         var codigo = evento.code;
         
         
-        if (codigo == "ArrowLeft") marcador.position.x -= 5;
-        if (codigo == "ArrowRight") marcador.position.x += 5;
-        if (codigo == "ArrowUp") marcador.position.z +=5;
-        if (codigo == "ArrowDown") marcador.position.z -=5;
+        if (codigo == "ArrowLeft") marcador.rotation.y += 0.1;
+        if (codigo == "ArrowRight") marcador.rotation.y -= 0.1;
+        if (codigo == "ArrowUp") avanzar(marcador, marcador.rotation.y, false);
+        if (codigo == "ArrowDown") avanzar(marcador, marcador.rotation.y, true);
+        if (codigo =="KeyG") {
+            girando == !girando;
+        
+        }
+    
+        }
+        
+    
+    function avanzar(objeto, radianes, atras = false){
+        //Para que pueda ir hacia atrás con los cursores 
+        var grados = (180*radianes/ Math.PI); 
+        if (atras) {
+            radianes = radianes + Math.PI;
+        }
+        var grados = 180*radianes/ Math.PI;
+        
+        console.log("Grados:" + grados);
+        console.log("Radianes:" + radianes);
+        console.log("X:" + objeto.position.x);
+        console.log("Z:" + objeto.position.z);
+        console.log("Cos(radianes):" + Math.cos(radianes));
+        console.log("Sen(radianes:)" + Math.sin(radianes));
+        
+        objeto.position.x +=  -20*Math.sin(radianes); 
+        objeto.position.z +=  -20*Math.cos(radianes);
     }
+    
     
        var distancia_arboles = 800;
     var minimo_x = -4000;
@@ -121,7 +148,7 @@ avatar.add(leftFoot);
     
 function animate (){
   requestAnimationFrame(animate) ;
-  avatar.rotation.z = avatar.rotation.z + 0.06;
+  avatar.rotation.z = avatar.rotation.z + 0.1;
   renderer.render(scene, camera);
         
 }
