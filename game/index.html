@@ -62,6 +62,8 @@ avatar.add(leftFoot);
     
     document.addEventListener("keydown", gestionarTecla);
     
+    //Lista de objetos que no podemos atravesar 
+    var noPermitido = [];
     function hacerArbol(x,z){
         
         
@@ -77,7 +79,7 @@ avatar.add(leftFoot);
         new THREE.SphereGeometry(150),
         new THREE.MeshBasicMaterial({color:"forestgreen"})
         );
-        
+    
         //tronco add(copa);
         
         copa.position.y=175; 
@@ -85,7 +87,23 @@ avatar.add(leftFoot);
         
         tronco.position.set(x, -75, z);
         scene.add(tronco);
+        
+        //Añadir circulo de control del limite 
+        var circulo = new THREE.CircleGeometry(300);
+        var circulo_t =  new THREE.MeshNormalMaterial();
+        var limite = new THREE.Mesh(circulo, circulo_t);
+        
+        limite.position.y = -100;
+        limite.rotation.x = -Math.PI/2;
+        limite.position.x = -Math.PI/2;
+        tronco.add(limite);
+        noPermitido.push(limite);
+        
+        scene.add(tronco);
+            
+                                                    
     }
+    
     
     hacerArbol(0,0);
     
@@ -97,7 +115,7 @@ avatar.add(leftFoot);
         if (codigo == "ArrowLeft") marcador.rotation.y += 0.1;
         if (codigo == "ArrowRight") marcador.rotation.y -= 0.1;
         if (codigo == "ArrowUp") avanzar(marcador, marcador.rotation.y, false);
-        if (codigo == "ArrowDown") avanzar(marcador, marcador.rotation.y,+ Math.PI);
+        if (codigo == "ArrowDown") avanzar(marcador, marcador.rotation.y,true);
         if (codigo =="KeyG") {
             girando == !girando;
         
@@ -108,7 +126,7 @@ avatar.add(leftFoot);
     
     function avanzar(objeto, radianes, atras = false){
         var grados = (180*radianes/ Math.PI); 
-        if (atras) {
+        if (!atras) {
             radianes = radianes + Math.PI;
         }
         var grados = 180*radianes/ Math.PI;
@@ -127,7 +145,7 @@ avatar.add(leftFoot);
         
         //Movemos el objeto en la dirección que toca 
         objeto.position.x +=  -20*Math.sin(radianes); 
-        objeto.position.z +=  -20*Math.cos(radianes);
+        objeto.position.z +=  +20*Math.cos(radianes);
         
         //TODO: Comprobar si hemos colisionando
         //Si colisionamos deshacemos el paso. 
