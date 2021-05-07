@@ -29,10 +29,12 @@ var cover = new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh(body, cover);
 scene.add(avatar);
     
+    
     //avatar.add(camera);
     //scene.add(camera);
     //scene.add(avatar);
-    scene.add(marcador);
+    marcador.position.x = 400;
+    scene.add(marcador); 
     marcador.add(avatar);
     marcador.add(camera);
     
@@ -144,24 +146,36 @@ avatar.add(leftFoot);
         
         
         //Movemos el objeto en la dirección que toca 
-        objeto.position.x +=  -20*Math.sin(radianes); 
-        objeto.position.z +=  +20*Math.cos(radianes);
+        objeto.position.x += inc_x; 
+        objeto.position.z += inc_z;
         
-        //TODO: Comprobar si hemos colisionando
-        //Si colisionamos deshacemos el paso. 
-        if (hayColision()) {
-            //Si colisionamos deshacemos el paso. 
-                objeto.position.x -=  -20*Math.sin(radianes); 
-                objeto.position.z -=  -20*Math.cos(radianes);
+    //TODO: Comprobar si hemos colisionando
+        
+     if (hayColision()){
+        //si colisionamos deshacemos el paso 
+        objeto.position.x -= inc_x;
+        objeto.position.z -= inc_z;
+            
         }
-    }
     
-    function hayColision(){
-        return false;
         
     }
-
     
+    function hayColision() {
+        var vector = new THREE.Vector3(0, -1,0);
+        var raycaster = new THREE.RayCaster(marcador.position, vector);
+            
+        var colisionados = raycaster.intersectObjects(noPermitido);
+            
+        if (colisionados.length > 0); return true;
+        return false;
+    }
+        
+        function hayColision(){
+        return false;
+    }
+    
+
        var distancia_arboles = 800;
     var minimo_x = -4000;
     var maximo_x = 4000;
