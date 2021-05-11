@@ -10,7 +10,7 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = -600;
+  camera.position.z = 600;
     scene.add(camera);
     
 
@@ -19,15 +19,17 @@
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // ******** START CODING ON THE NEXT LINE ********
-// Marcador
-    var marcador = new THREE.Object3D();
-    
-// Cuerpo   
+ 
+ // ******** START CODING ON THE NEXT LINE ********
+
+    // Cuerpo  
 var body = new THREE.SphereGeometry(100);
 var cover = new THREE.MeshNormalMaterial(flat);
 var avatar = new THREE.Mesh(body, cover);
 scene.add(avatar);
+    
+    // Marcador
+    var marcador = new THREE.Object3D();
     
     
     //avatar.add(camera);
@@ -160,18 +162,15 @@ avatar.add(leftFoot);
     
         
     }
-    
+    //Revisar si el avatar colisiona con un objeto de la lista noPermitido
+    //DEvuelve true si hay colision, y false si no la hay
     function hayColision() {
         var vector = new THREE.Vector3(0, -1,0);
-        var raycaster = new THREE.RayCaster(marcador.position, vector);
+        var raycaster = new THREE.Raycaster(marcador.position, vector);
             
         var colisionados = raycaster.intersectObjects(noPermitido);
             
-        if (colisionados.length > 0); return true;
-        return false;
-    }
-        
-        function hayColision(){
+        if (colisionados.length > 0)return true;
         return false;
     }
     
@@ -198,7 +197,7 @@ avatar.add(leftFoot);
     
 function animate (){
   requestAnimationFrame(animate) ;
-  avatar.rotation.z = avatar.rotation.z + 0.1;
+  avatar.rotation.z = avatar.rotation.z + 0.15;
   renderer.render(scene, camera);
         
 }
